@@ -31,7 +31,13 @@ def write_outputs(file_name, file_extension, write_content):
         file_object.close()
 
     elif (file_extension == "morse"):
-        print("ALo")
+        file_object = open((file_name + ".txt"), "w")
+        file_object.write(write_content)
+        file_object.close()
+
+        file_object = open((file_name + ".wav"), "w")
+        file_object.write(write_content)
+        file_object.close()
     
     elif (file_extension == "wav"):
         print("ALo")
@@ -55,10 +61,17 @@ def morse_read(file_name, file_extension, input_read):
     input_read = input_read.rsplit("0000000")
     for i in range(len(input_read)):
         input_read[i] = input_read[i].rsplit("000") 
-    print(input_read)
+    # print(input_read)
     for i in range(len(input_read)):
         for j in range(len(input_read[i])):
-            output = input_read[i][j].
+            for k in morse_base.keys():
+                if (input_read[i][j] == morse_base[k]):
+                    output += k
+        output += ' '
+    # print(output)
+    write_outputs(file_name, file_extension, output)
+
+
 def main():
     file_name = sys.argv[1].split(".")[0]
     file_extension = sys.argv[1].split(".")[1]
