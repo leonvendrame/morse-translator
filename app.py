@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import wave
+import numpy as np
 
 morse_base = {
     'A' : "101110", 'B' : "1110101010", 'C' : "111010111010",
@@ -17,7 +19,7 @@ morse_base = {
     '2' : "1010111011101110", '3' : "10101011101110",
     '4' : "101010101110", '5' : "1010101010", '6' : "111010101010",
     '7' : "11101110101010", '8' : "1110111011101010",
-    '9' : "111011101110111010"
+    '9' : "111011101110111010", '\n' : "\n"
 }
 
 def write_outputs(file_name, file_extension, write_content):
@@ -71,6 +73,8 @@ def morse_read(file_name, file_extension, input_read):
     # print(output)
     write_outputs(file_name, file_extension, output)
 
+def wave_samples(frequency = 440, sampling_rate = 48000, num_samples = 25):
+    return [np.sin(2 * np.pi * frequency * x / sampling_rate) for x in range(num_samples)]
 
 def main():
     file_name = sys.argv[1].split(".")[0]
@@ -90,6 +94,7 @@ def main():
         wav_read(file_name, file_extension, input_read)
     else:
         print("Tipo de arquivo não reconhecido, tente novamente.")
+    
 
 if __name__ == "__main__":
     main()
