@@ -4,6 +4,7 @@
 import sys
 import wave
 import numpy as np
+import re
 
 morse_base = {
     'A' : "101110", 'B' : "1110101010", 'C' : "111010111010",
@@ -19,7 +20,7 @@ morse_base = {
     '2' : "1010111011101110", '3' : "10101011101110",
     '4' : "101010101110", '5' : "1010101010", '6' : "111010101010",
     '7' : "11101110101010", '8' : "1110111011101010",
-    '9' : "111011101110111010", '\n' : "\n"
+    '9' : "111011101110111010"
 }
 
 def write_outputs(file_name, file_extension, write_content):
@@ -47,7 +48,7 @@ def write_outputs(file_name, file_extension, write_content):
 def txt_read(file_name, file_extension, input_read):
     output = ''
     for i in range(len(input_read)):
-        if (input_read[i] == ' '):
+        if (input_read[i] == ' ' or input_read[i] == '\n'):
             output += "0000000"
         elif (i == len(input_read)-1 or input_read[i+1] == ' '):
             output += morse_base[input_read[i]]
@@ -76,15 +77,26 @@ def morse_read(file_name, file_extension, input_read):
 def wave_samples(frequency = 440, sampling_rate = 48000, num_samples = 25):
     return [np.sin(2 * np.pi * frequency * x / sampling_rate) for x in range(num_samples)]
 
-def main():
-    file_name = sys.argv[1].split(".")[0]
-    file_extension = sys.argv[1].split(".")[1]
-    file_object = open(sys.argv[1], "r")
+def read_file(app_arguments):
+    file_name = app_arguments[1].split(".")[0]
+    file_extension = app_arguments[1].split(".")[1]
+    try: 
+        file_object = open(app_arguments[1], "r")
+    except:
+        print("Erro ao abrir arquivo, verifique se o arquivo existe e tente novamente.")
+        exit()
     input_read = file_object.read()
     file_object.close()
+    
+    input_read = re.sub(r'[^a-zA-Z|0-9|\s|\n]', '', input_read)
+    input_read = input_read.upper()
+    
+    return file_name, file_extension, input_read
 
-    input_read = input_read.upper().replace('*', '').replace('?', '').replace('!', '') \
-                .replace(',', '')
+def main():
+    file_name, file_extension, input_read = read_file(sys.argv)
+
+    print(input_read)
 
     if (file_extension == "txt"):
         txt_read(file_name, file_extension, input_read)
