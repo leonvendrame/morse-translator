@@ -5,8 +5,7 @@ Tradutor de arquivos morse
 .wav para .morse e .txt  
 .morse para .txt e .wav  
 
-#
-## Execução
+### Execução
 O script pode ser executado por:  
 ```./app.py arquivo_de_entrada```  
 ```python3 app.py arquivo_de_entrada```  
@@ -21,7 +20,7 @@ Para a geração do áudio foram utilizadas as seguintes constantes:
 - **Frequência**: 440Hz
 
 ### Testes e Amostras
-Foram incluídos dois testes utilizando a biblioteca *UnitTest*. O testes correspondem a transformação de texto/morse e morse/texto.  
-Foram incluídos alguns arquivos de amostras para execuções, armazenados no diretório *samples*.  
+Foram incluídos dois testes utilizando a biblioteca *__unittest__*. Os testes correspondem a transformação de texto/morse e morse/texto.  
+Foram incluídos alguns arquivos de amostras para execuções, armazenados no diretório *__samples__*.  
 
 #
